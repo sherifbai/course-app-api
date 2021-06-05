@@ -7,4 +7,6 @@ const router = Router()
 
 router.post('/add', isAuth, courseController.createCourse)
 
+router.put('/update/:courseId', isAuth, courseController.updateCourse)
+
 module.exports = router

@@ -37,3 +37,34 @@ exports.createCourse = async (req, res, next) => {
         next(error)
     }
 }
+
+exports.updateCourse = async (req, res, next) => {
+    const courseId = req.params.courseId
+
+    const title = req.body.title
+    const price = req.body.price
+
+    let imgUrl = req.body.image
+
+    if (req.file) {
+        imgUrl = req.file.path.replace(/\\/g, "/")
+    }
+    if (!imgUrl) {
+        const error = new Error('No picked file')
+        error.statusCode = 422
+        throw error
+    }
+    const course = await Course.findById(courseId)
+
+    course.title = title
+    course.price = price
+    course.imgUrl = imgUrl
+
+    const savedCourse = await course.save()
+
+    res.status(200).json({
+        success: true,
+        message: 'Course updated successfully!!!',
+        data: savedCourse
+    })
+}
