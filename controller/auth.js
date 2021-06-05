@@ -1,11 +1,19 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const { validationResult } = require('express-validator')
 
 const User = require('../models/user')
 
 exports.signUp = async (req, res, next) => {
     const email = req.body.email
     const password = req.body.password
+    const errors = validationResult(req)
+    
+    if (!errors.isEmpty()) {
+        const error = new Error('Validation failed')
+        error.statusCode = 422
+        throw error
+    }
 
     try {
         const hashedPW = await bcrypt.hash(password, 12)
@@ -35,6 +43,14 @@ exports.signUp = async (req, res, next) => {
 exports.signIn = async (req, res, next) => {
     const email = req.body.email
     const password = req.body.password
+    const errors = validationResult(req)
+    
+    if (!errors.isEmpty()) {
+        const error = new Error('Validation failed')
+        error.statusCode = 422
+        throw error
+    }
+
 
     try {
         const user = await User.findOne({email: email})
