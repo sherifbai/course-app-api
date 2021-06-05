@@ -6,6 +6,7 @@ const bodyParser = require('body-parser')
 const multer = require('multer')
 
 
+const courseRouter = require('./routes/course')
 const authRouter = require('./routes/auth')
 
 
@@ -35,6 +36,7 @@ const fileFilter = (req, file, cb) => {
 
 
 app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(multer({storage: fileStorage, fileFilter: fileFilter}).single('image'))
 app.use('/images', express.static('images'))
 
@@ -46,6 +48,8 @@ app.use((req, res, next) => {
     next();
 })
 
+
+app.use('/api/course', courseRouter)
 app.use('/api/auth', authRouter)
 
 app.use(function (error, req, res, next) {
