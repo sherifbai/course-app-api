@@ -9,4 +9,6 @@ router.post('/add', isAuth, courseController.createCourse)
 
 router.put('/update/:courseId', isAuth, courseController.updateCourse)
 
+router.delete('/delete/:courseId', isAuth, courseController.deleteCourse)
+
 module.exports = router

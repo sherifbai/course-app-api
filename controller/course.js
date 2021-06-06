@@ -54,17 +54,44 @@ exports.updateCourse = async (req, res, next) => {
         error.statusCode = 422
         throw error
     }
-    const course = await Course.findById(courseId)
+    try {
+        const course = await Course.findById(courseId)
 
-    course.title = title
-    course.price = price
-    course.imgUrl = imgUrl
+        course.title = title
+        course.price = price
+        course.imgUrl = imgUrl
 
-    const savedCourse = await course.save()
+        const savedCourse = await course.save()
 
-    res.status(200).json({
-        success: true,
-        message: 'Course updated successfully!!!',
-        data: savedCourse
-    })
+        res.status(200).json({
+            success: true,
+            message: 'Course updated successfully!!!',
+            data: savedCourse
+        })
+    } catch (error) {
+        if (!error.statusCode) {
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
+exports.deleteCourse = async (req, res, next) => {
+    const courseId = req.params.courseId
+
+    try {
+        await Course.findByIdAndRemove(courseId)
+
+
+        res.status(200).json({
+            success: true,
+            message: 'Course deleted successfully',
+            data: null
+        })
+    } catch (error) {
+        if (!error.statusCode) {
+            error.statusCode = 500
+        }
+        next(error)
+    }
 }
