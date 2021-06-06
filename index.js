@@ -8,6 +8,7 @@ const multer = require('multer')
 
 const courseRouter = require('./routes/course')
 const authRouter = require('./routes/auth')
+const cartRouter = require('./routes/cart')
 
 
 const app = express()
@@ -51,6 +52,8 @@ app.use((req, res, next) => {
 
 app.use('/api/course', courseRouter)
 app.use('/api/auth', authRouter)
+app.use('/api/cart', cartRouter)
+
 
 app.use(function (error, req, res, next) {
     console.log(error);
