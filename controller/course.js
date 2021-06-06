@@ -1,5 +1,7 @@
 const Course = require('../models/course')
-const User = require('../models/user')
+
+const fs = require('fs')
+const path = require('path')
 
 
 exports.createCourse = async (req, res, next) => {
@@ -56,10 +58,16 @@ exports.updateCourse = async (req, res, next) => {
     }
     try {
         const course = await Course.findById(courseId)
-
+        
+        if (imgUrl !== course.imgUrl) {
+            clearImage(course.imgUrl)
+        }
+        
+        
         course.title = title
         course.price = price
         course.imgUrl = imgUrl
+        
 
         const savedCourse = await course.save()
 
@@ -94,4 +102,11 @@ exports.deleteCourse = async (req, res, next) => {
         }
         next(error)
     }
+}
+
+const clearImage = filePath => {
+    filePath = path.join(__dirname, '..', filepath)
+    fs.unlink(filePath, error => {
+        console.log(error)
+    })
 }
