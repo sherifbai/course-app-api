@@ -9,7 +9,7 @@ exports.signUp = async (req, res, next) => {
     const password = req.body.password
     const errors = validationResult(req)
     
-    if (!errors.isEmpty()) {
+    if (errors.isEmpty()) {
         const error = new Error('Validation failed')
         error.statusCode = 422
         throw error

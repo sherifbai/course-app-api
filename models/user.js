@@ -45,4 +45,25 @@ userSchema.methods.addToCart = function(course){
     return this.save()
 }
 
+userSchema.methods.deleteFromCart = function(course){
+    const cartCourseId = this.cart.items.findIndex(el => {
+        return el.courseId.toString() === course._id.toString()
+    })
+    let updatedCourse = [...this.cart.items]
+
+    if (updatedCourse[cartCourseId].quantity === 1) {
+        updatedCourse = this.cart.items.filter(el => {
+            return el.courseId.toString() !== course._id.toString()
+        })
+    } else {
+        updatedCourse[cartCourseId].quantity -= 1
+    }
+
+    this.cart = {
+        items: updatedCourse
+    }
+
+    return this.save()
+}
+
 module.exports = mongoose.model('User', userSchema)

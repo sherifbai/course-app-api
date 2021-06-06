@@ -7,4 +7,6 @@ const router = Router()
 
 router.post('/add/:courseId', isAuth, cartController.addToCart)
 
+router.delete('/delete/:courseId', isAuth, cartController.deleteFromCart)
+
 module.exports = router
