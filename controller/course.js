@@ -88,6 +88,10 @@ exports.deleteCourse = async (req, res, next) => {
     const courseId = req.params.courseId
 
     try {
+        const course = await Course.findById(courseId)
+
+        clearImage(course.imgUrl)
+
         await Course.findByIdAndRemove(courseId)
 
 
