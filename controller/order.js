@@ -1,5 +1,4 @@
 const User = require('../models/user')
-const Course = require('../models/course')
 const Order = require('../models/order')
 
 exports.createOrder = async (req, res, next) => {
@@ -24,11 +23,40 @@ exports.createOrder = async (req, res, next) => {
         
         await user.cleanCart()
 
-        res.status(200).json({
+        res.status(201).json({
             success: true,
             message: 'Order created successfully!!!',
             data: savedOrder
         })
+    } catch (error) {
+        if (!error.statusCode) {
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
+exports.deleteOrder = async (req, res, next) => {
+    const orderId = req.params.orderId
+
+    try {
+        let order = await Order.findById(orderId)
+        
+        if (order.course[0].quantity === 1) {
+            await Order.findByIdAndRemove(orderId)
+            order = null
+        } else {
+            order.course[0].quantity -= 1
+            await order.save()
+        }
+
+
+        res.status(200).json({
+            success: true,
+            message: 'Order deleted successfully!!!',
+            data: order
+        })
+
     } catch (error) {
         if (!error.statusCode) {
             error.statusCode = 500

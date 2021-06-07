@@ -49,6 +49,7 @@ userSchema.methods.deleteFromCart = function(course){
     const cartCourseId = this.cart.items.findIndex(el => {
         return el.courseId.toString() === course._id.toString()
     })
+    console.log(cartCourseId)
     let updatedCourse = [...this.cart.items]
 
     if (updatedCourse[cartCourseId].quantity === 1) {
