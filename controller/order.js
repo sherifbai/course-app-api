@@ -22,6 +22,8 @@ exports.createOrder = async (req, res, next) => {
 
         const savedOrder = await order.save()
         
+        await user.cleanCart()
+
         res.status(200).json({
             success: true,
             message: 'Order created successfully!!!',
