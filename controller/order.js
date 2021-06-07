@@ -40,21 +40,12 @@ exports.deleteOrder = async (req, res, next) => {
     const orderId = req.params.orderId
 
     try {
-        let order = await Order.findById(orderId)
-        
-        if (order.course[0].quantity === 1) {
-            await Order.findByIdAndRemove(orderId)
-            order = null
-        } else {
-            order.course[0].quantity -= 1
-            await order.save()
-        }
-
+        const order = await Order.findByIdAndRemove(orderId)
 
         res.status(200).json({
             success: true,
             message: 'Order deleted successfully!!!',
-            data: order
+            data: null
         })
 
     } catch (error) {
