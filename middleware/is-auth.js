@@ -24,6 +24,7 @@ module.exports = (req, res, next) => {
         throw error
     }
 
+    req.email = decodedToken.email
     req.userId = decodedToken.userId
     next()
 }
