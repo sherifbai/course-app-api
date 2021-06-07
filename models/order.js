@@ -5,7 +5,7 @@ const Order = require('./order')
 const Schema = mongoose.Schema
 
 const orderSchema = new Schema({
-    course: [{
+    courses: [{
         courseId: {type: Schema.Types.ObjectId, ref: 'Course', required: true},
         quantity: {type: Number, required: true}
     }],
