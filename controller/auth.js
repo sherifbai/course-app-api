@@ -2,7 +2,9 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const { validationResult } = require('express-validator')
 
+
 const User = require('../models/user')
+
 
 exports.signUp = async (req, res, next) => {
     const email = req.body.email
@@ -39,6 +41,7 @@ exports.signUp = async (req, res, next) => {
         next(error)
     }
 }
+
 
 exports.signIn = async (req, res, next) => {
     const email = req.body.email

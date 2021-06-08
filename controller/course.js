@@ -40,6 +40,7 @@ exports.createCourse = async (req, res, next) => {
     }
 }
 
+
 exports.updateCourse = async (req, res, next) => {
     const courseId = req.params.courseId
 
@@ -84,6 +85,7 @@ exports.updateCourse = async (req, res, next) => {
     }
 }
 
+
 exports.deleteCourse = async (req, res, next) => {
     const courseId = req.params.courseId
 
@@ -107,6 +109,7 @@ exports.deleteCourse = async (req, res, next) => {
         next(error)
     }
 }
+
 
 const clearImage = filePath => {
     filePath = path.join(__dirname, '..', filepath)

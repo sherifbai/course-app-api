@@ -1,6 +1,7 @@
 const User = require('../models/user')
 const Course = require('../models/course')
 
+
 exports.addToCart = async (req, res, next) => {
     const courseId = req.params.courseId
 
@@ -24,6 +25,7 @@ exports.addToCart = async (req, res, next) => {
         next(error)
     }
 }
+
 
 exports.deleteFromCart = async (req, res, next) => {
     const courseId = req.params.courseId
