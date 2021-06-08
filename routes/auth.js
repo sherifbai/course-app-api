@@ -1,10 +1,13 @@
 const { Router } = require('express')
 const { body } = require('express-validator')
 
+
 const User = require('../models/user')
 const authController = require('../controller/auth')
 
+
 const router = Router()
+
 
 router.post('/signup', [
     body('email')
@@ -26,6 +29,7 @@ router.post('/signup', [
         .isEmpty()
 ], authController.signUp)
 
+
 router.post('/signin', [
     body('email')
         .isEmail()
@@ -37,5 +41,6 @@ router.post('/signin', [
         .not()
         .isEmpty()
 ], authController.signIn)
+
 
 module.exports = router
