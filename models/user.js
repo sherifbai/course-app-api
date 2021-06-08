@@ -1,6 +1,8 @@
 const mongoose = require('mongoose')
 
+
 const Schema = mongoose.Schema
+
 
 const userSchema = new Schema({
     email: {
@@ -20,6 +22,7 @@ const userSchema = new Schema({
         ]
     }
 })
+
 
 userSchema.methods.addToCart = function(course){
     const cartCourseId = this.cart.items.findIndex(el => {
@@ -44,6 +47,7 @@ userSchema.methods.addToCart = function(course){
 
     return this.save()
 }
+
 
 userSchema.methods.deleteFromCart = function(course){
     const cartCourseId = this.cart.items.findIndex(el => {
