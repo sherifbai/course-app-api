@@ -147,7 +147,10 @@ exports.getCourse = async (req, res, next) => {
             message: 'Course selected successfully!!!'
         })
     } catch (error) {
-        
+        if (!error.statusCode) {
+            error.statusCode = 500
+        }
+        next(error)
     }
 }
 
