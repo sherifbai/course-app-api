@@ -8,9 +8,8 @@ const cartController = require('../controller/cart')
 const router = Router()
 
 
+router.get('/', isAuth, cartController.getCarts)
 router.post('/add/:courseId', isAuth, cartController.addToCart)
-
-
 router.delete('/delete/:courseId', isAuth, cartController.deleteFromCart)
 
 

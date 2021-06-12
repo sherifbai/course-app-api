@@ -2,6 +2,23 @@ const User = require('../models/user')
 const Course = require('../models/course')
 
 
+exports.getCarts = async (req, res, next) => {
+    try {
+        const carts = await User.findOne({_id: req.userId}).populate('items')
+
+        res.status(200).json({
+            success: true,
+            data: carts
+        })
+    } catch (error) {
+        if (!error.statusCode) {
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
+
 exports.addToCart = async (req, res, next) => {
     const courseId = req.params.courseId
 
