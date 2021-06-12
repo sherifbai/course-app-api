@@ -8,6 +8,7 @@ const isAuth = require('../middleware/is-auth')
 const router = Router()
 
 
+router.get('/:orderId', isAuth, orderController.getOrder)
 router.get('/', isAuth, orderController.getOrders)
 router.post('/add', isAuth, orderController.createOrder)
 router.delete('/delete/:orderId', orderController.deleteOrder)

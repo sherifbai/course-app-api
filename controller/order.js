@@ -2,6 +2,31 @@ const User = require('../models/user')
 const Order = require('../models/order')
 
 
+exports.getOrder = async (req, res, next) => {
+    const orderId = req.params.orderId
+
+    try {
+        const order = await Order.findById(orderId)
+
+        if (!order) {
+            const error = new Error('Данные не найдены!!!')
+            error.statusCode = 404
+            throw error
+        }
+
+        res.status(200).json({
+            success: true,
+            data: order
+        })
+    } catch (error) {
+        if (!error.statusCode) {
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
+
 exports.getOrders = async (req, res, next) => {
     try {
         const orders = await Order.find()
