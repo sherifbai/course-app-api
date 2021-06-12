@@ -2,11 +2,26 @@ const User = require('../models/user')
 const Order = require('../models/order')
 
 
+exports.getOrders = async (req, res, next) => {
+    try {
+        const orders = await Order.find()
+
+        res.status(200).json({
+            success: true,
+            data: orders
+        })
+    } catch (error) {
+        if (!error.statusCode) {
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
+
 exports.createOrder = async (req, res, next) => {
     try {
-        const user = await User.findById(req.userId)
-        
-        user.populate('cart.items.courseId').execPopulate()
+        const user = await User.findById(req.userId).populate('items')
 
         const course = user.cart.items.map(el => {
             return {quantity: el.quantity, courseId: el.courseId}
@@ -17,7 +32,7 @@ exports.createOrder = async (req, res, next) => {
                 email: req.email,
                 userId: req.userId
             },
-            course: course
+            courses: course
         })
 
         const savedOrder = await order.save()
@@ -42,7 +57,7 @@ exports.deleteOrder = async (req, res, next) => {
     const orderId = req.params.orderId
 
     try {
-        const order = await Order.findByIdAndRemove(orderId)
+        await Order.findByIdAndRemove(orderId)
 
         res.status(200).json({
             success: true,
