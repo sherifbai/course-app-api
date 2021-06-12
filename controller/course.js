@@ -129,6 +129,29 @@ exports.getCourses = async (req, res, next) => {
 }
 
 
+exports.getCourse = async (req, res, next) => {
+    const courseId = req.params.courseId
+
+    try {
+        const course = await Course.findById(courseId)
+
+        if (!course) {
+            const error = new Error('Данные не найдены!!!')
+            error.statusCode = 404
+            throw error
+        }
+
+        res.status(200).json({
+            success: true,
+            data: course,
+            message: 'Course selected successfully!!!'
+        })
+    } catch (error) {
+        
+    }
+}
+
+
 const clearImage = filePath => {
     filePath = path.join(__dirname, '..', filepath)
     fs.unlink(filePath, error => {
