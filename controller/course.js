@@ -111,6 +111,24 @@ exports.deleteCourse = async (req, res, next) => {
 }
 
 
+exports.getCourses = async (req, res, next) => {
+    try {
+        const courses = await Course.find()
+
+        res.status(200).json({
+            success: true,
+            data: courses,
+            message: 'Courses selected successfully!!!'
+        })
+    } catch (error) {
+        if (!error.statusCode) {
+            error.statusCode = 500
+        }
+        next(error)
+    }
+}
+
+
 const clearImage = filePath => {
     filePath = path.join(__dirname, '..', filepath)
     fs.unlink(filePath, error => {
